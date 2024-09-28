@@ -82,6 +82,7 @@ export function ChatItem(props: {
             className={styles["chat-item-delete"]}
             onClickCapture={props.onDelete}
           >
+            {/* 删除对话的标志 */}
             <DeleteIcon />
           </div>
         </div>

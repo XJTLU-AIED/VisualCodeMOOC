@@ -3,7 +3,7 @@ import { ACCESS_CODE_PREFIX } from "../constant";
 import { ChatMessage, ModelType, useAccessStore } from "../store";
 import { ChatGPTApi } from "./platforms/openai";
 import React from "react";
-import { Props } from "../components/visual_props";
+import { Props } from "../components/visual-props";
 export const ROLES = ["system", "user", "assistant"] as const;
 export type MessageRole = (typeof ROLES)[number];
 
@@ -14,7 +14,7 @@ export interface RequestMessage {
   role: MessageRole;
   content: string;
   // animation: React.ReactNode | null;
-  animation: Props; //新加
+  animation: Props;
 }
 
 export interface LLMConfig {

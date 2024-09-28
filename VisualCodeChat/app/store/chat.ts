@@ -17,10 +17,10 @@ import { estimateTokenLength } from "../utils/token";
 import { nanoid } from "nanoid";
 import { createPersistStore } from "../utils/store";
 
-import { extractArrayFromString } from "../visual/extract";
-import { Props } from "../components/visual_props";
-import { contains5ElementList } from "../visual/extract";
-import { getSteps } from "../visual/extract";
+import { Props } from "../components/visual-props";
+import {getAni} from "./get-animation";
+import { extractJSONContent } from "../visual/extract";
+
 export type ChatMessage = RequestMessage & {
   date: string;
   streaming?: boolean;
@@ -91,7 +91,7 @@ export const BOT_HELLO: ChatMessage = createMessage({
 function createEmptySession(): ChatSession {
   return {
     sortdata: {
-      oldData: [0], //新加
+      oldData: [0],
       newData: [0],
     },
     findmaxdata: {
@@ -183,6 +183,7 @@ const DEFAULT_CHAT_STATE = {
   sessions: [createEmptySession()],
   currentSessionIndex: 0,
 };
+
 
 export const useChatStore = createPersistStore(
   DEFAULT_CHAT_STATE,
@@ -330,7 +331,7 @@ export const useChatStore = createPersistStore(
       },
 
       async onUserInput(content: string) {
-        const session = get().currentSession();
+        let session = get().currentSession();
         const modelConfig = session.mask.modelConfig;
 
         const userContent = fillTemplateWith(content, modelConfig);
@@ -380,346 +381,13 @@ export const useChatStore = createPersistStore(
           onFinish(message) {
             botMessage.streaming = false;
             if (message) {
+              console.log(message);
               botMessage.content = message;
+              
+              const [ani, ses] = getAni(session, message, botMessage.id);
 
-              if (session.mask.name == "pAIr for Bubble Sort") {
-                const extractedData = extractArrayFromString(message);
-                const arrayData = Array.isArray(extractedData)
-                  ? extractedData
-                  : [];
-
-                //message中没有数组
-                if (arrayData.length == 1 && arrayData[0] == 1) {
-                  console.log("message中没有数组的情况");
-                  botMessage.animation = emptyprops; //message中没有数组的情况，不显示svg
-                } else if (
-                  //message中第一次出现数组：显示静态数组
-                  session.sortdata.oldData.length == 1 &&
-                  session.sortdata.oldData[0] == 0
-                ) {
-                  console.log("message中第一次出现数组:显示静态数组");
-                  session.sortdata.oldData = arrayData;
-
-                  let barchartprops: Props = {
-                    type: "barchart",
-                    data: session.sortdata.oldData,
-                    newData: session.sortdata.newData,
-                    messageId: botMessage.id,
-
-                    maxidx: -1,
-                    compareidx: -1,
-                    number: -1,
-                  };
-                  botMessage.animation = barchartprops; //应该能够得到一个静态的svg
-                } else {
-                  console.log("正常情况");
-                  session.sortdata.newData = arrayData;
-                  console.log("olddata:", session.sortdata.oldData);
-                  console.log("newdata:", session.sortdata.newData);
-
-                  let barchartprops: Props = {
-                    type: "barchart",
-                    data: session.sortdata.oldData,
-                    newData: session.sortdata.newData,
-                    messageId: botMessage.id,
-
-                    maxidx: -1,
-                    compareidx: -1,
-                    number: -1,
-                  };
-                  botMessage.animation = barchartprops;
-                  session.sortdata.oldData = session.sortdata.newData;
-                }
-              }
-              // ***********************changingAllNumber**************
-              // if (session.mask.name == "pAIr for Change Number") {
-              //   const extractedData = extractArrayFromString(message);
-              //   const arrayData = Array.isArray(extractedData)
-              //     ? extractedData
-              //     : [];
-              //   //message中没有数组
-              //   if (arrayData.length == 1 && arrayData[0] == 1) {
-              //     console.log("message中没有数组的情况");
-              //     botMessage.animation = emptyprops; //message中没有数组的情况，不显示svg
-              //   } else if (
-              //     //message中第一次出现数组：显示静态数组
-              //     session.sortdata.oldData.length == 1 &&
-              //     session.sortdata.oldData[0] == 0
-              //   ) {
-              //     console.log("message中第一次出现数组:显示静态数组");
-              //     session.sortdata.oldData = arrayData;
-
-              //     let barchartprops: Props = {
-              //       type: "changingAllNumber",
-              //       data: session.sortdata.oldData,
-              //       newData: session.sortdata.newData,
-              //       messageId: botMessage.id,
-              //       maxidx: -1,
-              //       compareidx: -1,
-              //       number: -1,
-              //     };
-              //     botMessage.animation = barchartprops; //应该能够得到一个静态的svg
-              //   } else {
-              //     console.log("正常情况");
-              //     session.sortdata.newData = arrayData;
-              //     console.log("olddata:", session.sortdata.oldData);
-              //     console.log("newdata:", session.sortdata.newData);
-
-              //     let barchartprops: Props = {
-              //       type: "changingAllNumber",
-              //       data: session.sortdata.oldData,
-              //       newData: session.sortdata.newData,
-              //       messageId: botMessage.id,
-              //       maxidx: -1,
-              //       compareidx: -1,
-              //       number: -1,
-              //     };
-              //     botMessage.animation = barchartprops;
-              //     session.sortdata.oldData = session.sortdata.newData;
-              //   }
-              // }
-              // // ****************************findmax*******************
-              // if (session.mask.name == "FindMax") {
-              //   // 检查是否出现five_element_list:
-              //   if (contains5ElementList(message)) {
-              //     // 首先得到list
-              //     if (session.findmaxdata.data.length === 0) {
-              //       const extractedData_f = extractArrayFromString(message);
-              //       const arrayData_f = Array.isArray(extractedData_f)
-              //         ? extractedData_f
-              //         : [];
-              //       if (arrayData_f.length === 5) {
-              //         session.findmaxdata.data = arrayData_f;
-              //       }
-              //     }
-
-              //     // 设定：比较开始
-              //     session.findmaxdata.compare_start = true;
-              //   }
-              //   if (session.findmaxdata.compare_start) {
-              //     console.log("start!!!!");
-              //     if (getSteps(message, "第一次比较")) {
-              //       console.log("第一次比较");
-              //       session.findmaxdata.maxidx = 0;
-              //       session.findmaxdata.compareidx = 1;
-              //       if (
-              //         session.findmaxdata.data[1] > session.findmaxdata.data[0]
-              //       ) {
-              //         session.findmaxdata.maxidx = 1;
-              //       }
-              //     }
-              //     if (getSteps(message, "第二次比较")) {
-              //       session.findmaxdata.compareidx = 2;
-              //       if (
-              //         session.findmaxdata.data[2] >
-              //         session.findmaxdata.data[session.findmaxdata.maxidx]
-              //       ) {
-              //         session.findmaxdata.maxidx = 2;
-              //       }
-              //     }
-              //     if (getSteps(message, "第三次比较")) {
-              //       session.findmaxdata.compareidx = 3;
-              //       if (
-              //         session.findmaxdata.data[3] >
-              //         session.findmaxdata.data[session.findmaxdata.maxidx]
-              //       ) {
-              //         session.findmaxdata.maxidx = 3;
-              //       }
-              //     }
-              //     if (getSteps(message, "第四次比较")) {
-              //       session.findmaxdata.compareidx = 4;
-              //       if (
-              //         session.findmaxdata.data[4] >
-              //         session.findmaxdata.data[session.findmaxdata.maxidx]
-              //       ) {
-              //         session.findmaxdata.maxidx = 4;
-              //       }
-              //     }
-              //   }
-
-              //   let findmaxprops: Props = {
-              //     type: "findmax",
-              //     data: session.findmaxdata.data,
-              //     maxidx: session.findmaxdata.maxidx,
-              //     compareidx: session.findmaxdata.compareidx,
-              //     messageId: botMessage.id,
-
-              //     newData: [],
-              //     number: -1,
-              //   };
-
-              //   if (session.findmaxdata.data.length !== 5) {
-              //     console.log("session.findmaxdata.data.length !== 5");
-              //     console.log(session.findmaxdata.data);
-              //     console.log(message);
-              //     findmaxprops = emptyprops;
-              //   } else if (session.findmaxdata.compareidx == 4) {
-              //     findmaxprops = emptyprops;
-              //   }
-
-              //   botMessage.animation = findmaxprops;
-              // }
-              if (session.mask.name == "FindMax") {
-                // 检查是否出现five_element_list:
-                if (
-                  !session.findmaxdata.compare_start &&
-                  contains5ElementList(message)
-                ) {
-                  // 首先得到list
-                  console.log("这里", message);
-                  if (session.findmaxdata.data.length === 0) {
-                    const extractedData_f = extractArrayFromString(message);
-                    console.log("extractedData_f: ", extractedData_f);
-                    const arrayData_f = Array.isArray(extractedData_f)
-                      ? extractedData_f
-                      : [];
-                    if (arrayData_f.length === 5) {
-                      session.findmaxdata.data = arrayData_f;
-                    }
-                  }
-
-                  // 设定：比较开始 不应该在这
-                  //session.findmaxdata.compare_start = true;
-                }
-
-                if (getSteps(message, "第一次比较")) {
-                  session.findmaxdata.compare_start = true;
-                  console.log("compare start!!!!");
-                  console.log("第一次比较");
-
-                  session.findmaxdata.maxidx = 0;
-                  session.findmaxdata.compareidx = 1;
-                  const findmaxprops1: Props = {
-                    type: "findmax",
-                    data: session.findmaxdata.data,
-                    maxidx: session.findmaxdata.maxidx,
-                    compareidx: session.findmaxdata.compareidx,
-                    messageId: botMessage.id,
-
-                    newData: [],
-                    number: -1,
-                  };
-                  botMessage.animation = findmaxprops1;
-                  if (
-                    session.findmaxdata.data[1] > session.findmaxdata.data[0]
-                  ) {
-                    session.findmaxdata.maxidx = 1;
-                  }
-                }
-
-                if (session.findmaxdata.compare_start) {
-                  if (getSteps(message, "第二次比较")) {
-                    session.findmaxdata.compareidx = 2;
-                    const findmaxprops2: Props = {
-                      type: "findmax",
-                      data: session.findmaxdata.data,
-                      maxidx: session.findmaxdata.maxidx,
-                      compareidx: session.findmaxdata.compareidx,
-                      messageId: botMessage.id,
-
-                      newData: [],
-                      number: -1,
-                    };
-                    botMessage.animation = findmaxprops2;
-                    if (
-                      session.findmaxdata.data[2] >
-                      session.findmaxdata.data[session.findmaxdata.maxidx]
-                    ) {
-                      session.findmaxdata.maxidx = 2;
-                    }
-                  }
-                  if (getSteps(message, "第三次比较")) {
-                    session.findmaxdata.compareidx = 3;
-                    const findmaxprops3: Props = {
-                      type: "findmax",
-                      data: session.findmaxdata.data,
-                      maxidx: session.findmaxdata.maxidx,
-                      compareidx: session.findmaxdata.compareidx,
-                      messageId: botMessage.id,
-
-                      newData: [],
-                      number: -1,
-                    };
-                    botMessage.animation = findmaxprops3;
-                    if (
-                      session.findmaxdata.data[3] >
-                      session.findmaxdata.data[session.findmaxdata.maxidx]
-                    ) {
-                      session.findmaxdata.maxidx = 3;
-                    }
-                  }
-                  if (getSteps(message, "第四次比较")) {
-                    session.findmaxdata.compareidx = 4;
-                    const findmaxprops4: Props = {
-                      type: "findmax",
-                      data: session.findmaxdata.data,
-                      maxidx: session.findmaxdata.maxidx,
-                      compareidx: session.findmaxdata.compareidx,
-                      messageId: botMessage.id,
-
-                      newData: [],
-                      number: -1,
-                    };
-                    botMessage.animation = findmaxprops4;
-                    if (
-                      session.findmaxdata.data[4] >
-                      session.findmaxdata.data[session.findmaxdata.maxidx]
-                    ) {
-                      session.findmaxdata.maxidx = 4;
-                    }
-                  }
-                }
-              }
-              if (
-                session.mask.name == "SearchNumber" ||
-                session.mask.name == "SearchNumber/EN"
-              ) {
-                const contains5list = contains5ElementList(message);
-                if (contains5list) {
-                  const _5list = extractArrayFromString(message);
-                  const _5list_s = Array.isArray(_5list) ? _5list : [];
-                  console.log(
-                    "现在 session.searchnumberdata.animationshowed = ",
-                    session.searchnumberdata.animationshowed,
-                  );
-                  if (session.searchnumberdata.animationshowed === 0) {
-                    console.log("contains5list: ", _5list_s);
-                    session.searchnumberdata.data = _5list_s;
-                  } else if (session.searchnumberdata.animationshowed === 1) {
-                    if (!_5list_s.includes(5)) {
-                      console.log("不包含5的list: ", _5list_s);
-                      session.searchnumberdata.data = _5list_s;
-                      session.searchnumberdata.animationshowed = 2;
-                    }
-                  }
-                }
-                let searchnumberprops: Props = {
-                  type: "searchnumber",
-                  data: session.searchnumberdata.data,
-                  number: 5,
-                  messageId: botMessage.id,
-
-                  maxidx: -1,
-                  compareidx: -1,
-                  newData: [],
-                };
-                if (
-                  session.searchnumberdata.animationshowed === 0 &&
-                  contains5list &&
-                  session.searchnumberdata.data.length === 5
-                ) {
-                  botMessage.animation = searchnumberprops;
-                  session.searchnumberdata.animationshowed = 1;
-                } else if (
-                  session.searchnumberdata.animationshowed === 2 &&
-                  session.searchnumberdata.data.length === 5
-                ) {
-                  botMessage.animation = searchnumberprops;
-                  session.searchnumberdata.animationshowed = 3;
-                } else {
-                  botMessage.animation = emptyprops;
-                }
-              }
+              botMessage.animation = ani;
+              session = ses;
               get().onNewMessage(botMessage);
             }
             ChatControllerPool.remove(session.id, botMessage.id);

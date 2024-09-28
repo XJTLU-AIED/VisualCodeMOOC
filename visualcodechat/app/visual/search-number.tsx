@@ -2,9 +2,9 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import * as d3 from "d3";
-import { Props } from "../components/visual_props";
+import { Props } from "../components/visual-props";
 
-// 这个组件需要用到的参数：data, number, messageId
+// data, number, messageId
 
 const SearchNumber: React.FC<Props> = ({ data, number, messageId }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -65,39 +65,30 @@ const SearchNumber: React.FC<Props> = ({ data, number, messageId }) => {
       .attr("transform", `translate(0,${height - marginBottom})`)
       .call(xAxis)
       .selectAll("text")
-      .style("font-size", "20px"); // 设置x轴文本字体大小;
+      .style("font-size", "20px"); 
 
     // gy
     svgElement
       .append("g")
       .attr("transform", `translate(${marginLeft},0)`)
-      //.call(d3.axisLeft(y).tickFormat(d3.format(".0f")))
       .call(
         d3
           .axisLeft(y)
           .ticks(d3.max(data) as number)
           .tickFormat(d3.format(".0f")),
       )
-      //.call((g) => g.select(".domain").remove())
       .selectAll("text")
-      .style("font-size", "20px"); // 设置y轴文本字体大小;
+      .style("font-size", "20px"); 
 
-    // 动画函数
     async function chart() {
       const index = getIndex(data, number);
 
       if (index !== -1) {
-        //await sleep(1000);
-        //const allSVGs = d3.selectAll("svg");
-
         await sleep(1000);
-
         let selector = "A" + messageId;
         const lastsvg = d3.select(`#${selector}`);
-
         for (let i = 0; i < index + 1; i++) {
           let bar = lastsvg.select(`.bar:nth-child(${i + 1})`);
-
           const colorTween = (startColor: string, endColor: string) => {
             return function (t: number) {
               const interpolateColor = d3.interpolateRgb(startColor, endColor);
@@ -133,18 +124,10 @@ const SearchNumber: React.FC<Props> = ({ data, number, messageId }) => {
               .delay(0)
               .tween("color", () => colorTween("orange", "steelblue"));
           }
-
           await sleep(900);
         }
       } else {
-        console.log("没有5的list动画生成");
-
-        //const allSVGs2 = d3.selectAll("svg");
-        // await sleep(1000);
-        // await Promise.resolve();
-
         const lastsvg2 = d3.select(`#${"A" + messageId}`);
-
         for (let i = 0; i < data.length; i++) {
           let bar2 = lastsvg2.select(`.bar:nth-child(${i + 1})`);
 
@@ -154,7 +137,6 @@ const SearchNumber: React.FC<Props> = ({ data, number, messageId }) => {
               bar2.select("rect").attr("fill", interpolateColor(t));
             };
           };
-
           if (i !== data.length - 1) {
             bar2
               .transition()
@@ -187,7 +169,6 @@ const SearchNumber: React.FC<Props> = ({ data, number, messageId }) => {
     chart();
   }, [data, number, messageId]);
 
-  // 找到两个数组中不同的位置
   function getIndex(arr1: number[], num: number): number {
     for (let i = 0; i < arr1.length; i++) {
       if (arr1[i] === num) {

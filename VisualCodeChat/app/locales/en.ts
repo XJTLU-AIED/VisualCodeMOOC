@@ -61,8 +61,8 @@ const en: LocaleType = {
         light: "Light Theme",
         dark: "Dark Theme",
       },
-      Prompt: "Prompts",
-      Masks: "Masks",
+      Prompt: "Save Data",
+      Masks: "Topics",
       Clear: "Clear Context",
       Settings: "Settings",
     },
@@ -73,7 +73,7 @@ const en: LocaleType = {
       if (submitKey === String(SubmitKey.Enter)) {
         inputHints += ", Shift + Enter to wrap";
       }
-      return inputHints + ", / to search prompts, : to use commands";
+      return inputHints + "";
     },
     Send: "Send",
     Config: {
@@ -358,15 +358,15 @@ const en: LocaleType = {
     Sysmessage: "You are an assistant that",
   },
   Mask: {
-    Name: "Mask",
+    Name: "Topics",
     Page: {
-      Title: "Prompt Template",
-      SubTitle: (count: number) => `${count} prompt templates`,
-      Search: "Search Templates",
+      Title: "Topics",
+      SubTitle: (count: number) => `${count} topics`,
+      Search: "Search topics",
       Create: "Create",
     },
     Item: {
-      Info: (count: number) => `${count} prompts`,
+      Info: (count: number) => `${count} topics`,
       Chat: "Chat",
       View: "View",
       Edit: "Edit",
@@ -401,8 +401,8 @@ const en: LocaleType = {
   NewChat: {
     Return: "Return",
     Skip: "Just Start",
-    Title: "Pick a Mask",
-    SubTitle: "Chat with the Soul behind the Mask",
+    Title: "Pick a Topic",
+    SubTitle: "Chat with the Soul behind the coding Topics",
     More: "Find More",
     NotShow: "Never Show Again",
     ConfirmNoShow: "Confirm to disable？You can enable it in settings later.",

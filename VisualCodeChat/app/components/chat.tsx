@@ -27,6 +27,7 @@ import PinIcon from "../icons/pin.svg";
 import EditIcon from "../icons/rename.svg";
 import ConfirmIcon from "../icons/confirm.svg";
 import CancelIcon from "../icons/cancel.svg";
+import PluginIcon from "../icons/plugin.svg";
 
 import LightIcon from "../icons/light.svg";
 import DarkIcon from "../icons/dark.svg";
@@ -34,6 +35,8 @@ import AutoIcon from "../icons/auto.svg";
 import BottomIcon from "../icons/bottom.svg";
 import StopIcon from "../icons/pause.svg";
 import RobotIcon from "../icons/robot.svg";
+
+import QuestionMark from "../icons/question-mark.svg"
 
 import {
   ChatMessage,
@@ -89,16 +92,24 @@ import { ChatCommandPrefix, useChatCommand, useCommand } from "../command";
 import { prettyObject } from "../utils/format";
 import { ExportMessageModal } from "./exporter";
 import { getClientConfig } from "../config/client";
-import BarChart from "../visual/array_visual";
-import BarChart_changingAllNumber from "../visual/array_changingAllNumber";
+import BarChart from "../visual/bubble-sort";
+import BarChart_changingAllNumber from "../visual/array-changing-all-number";
 import FindMax from "../visual/findmax";
-import SearchNumber from "../visual/searchNumber";
+import SearchNumber from "../visual/search-number";
+import InsertionSort from "../visual/insertio-Sort";
+import SelectionSort from "../visual/selection-sort";
+import BinarySearch from "../visual/binary-search";
+import { useSyncStore } from "../store/sync";
+import ConnectivityGraph from "../visual/graph-connectivity";
+import {extractJSONContent} from "../visual/extract";
+import ComponentsGraph from "../visual/component-graph";
+import Graph_Cycle from "../visual/graph-cycle";
 
 const Markdown = dynamic(async () => (await import("./markdown")).Markdown, {
   loading: () => <LoadingIcon />,
 });
+let callCount = 0;
 
-// const BarChartT = <BarChart data={[1, 6, 2, 7, 8]} newData={[1, 2, 6, 7, 8]} />;
 export function SessionConfigModel(props: { onClose: () => void }) {
   const chatStore = useChatStore();
   const session = chatStore.currentSession();
@@ -173,19 +184,6 @@ function PromptToast(props: {
 
   return (
     <div className={styles["prompt-toast"]} key="prompt-toast">
-      {/* 删除顶部预设提示 */}
-      {/* {props.showToast && (
-        <div
-          className={styles["prompt-toast-inner"] + " clickable"}
-          role="button"
-          onClick={() => props.setShowModal(true)}
-        >
-          <BrainIcon />
-          <span className={styles["prompt-toast-content"]}>
-            {Locale.Context.Toast(context.length)}
-          </span>
-        </div>
-      )} */}
       {props.showModal && (
         <SessionConfigModel onClose={() => props.setShowModal(false)} />
       )}
@@ -446,6 +444,24 @@ export function ChatActions(props: {
   );
   const [showModelSelector, setShowModelSelector] = useState(false);
 
+  const syncStore = useSyncStore();
+  // Define a function that executes the syncStore.sync() method and processes the results
+  const syncAndHandleResult = async () => {
+    try {
+      setTimeout(async () => {
+        await syncStore.sync();
+        callCount++;
+        console.log(`*****syncAndHandleResult called ${callCount} times *****`);
+      }, 1000); 
+    } catch (e) {
+      console.error("[Sync]", e);
+    }
+  };
+
+  const hints = ['The Blue Nodes: unvisited nodes', 'The Green Nodes: visited nodes', 
+                'The Red Nodes and Edges: current nodes or edges','The Yellow Nodes and Edges: final results of nodes or edges'
+                ,'After you have finished your chatting, please click the "magic wand", second button from the left'];
+
   return (
     <div className={styles["chat-input-actions"]}>
       {couldStop && (
@@ -462,14 +478,14 @@ export function ChatActions(props: {
           icon={<BottomIcon />}
         />
       )}
-      {/* 隐藏设置 */}
-      {/* {props.hitBottom && (
+      {/* setting */}
+      {props.hitBottom && (
         <ChatAction
           onClick={props.showPromptModal}
           text={Locale.Chat.InputActions.Settings}
           icon={<SettingsIcon />}
         />
-      )} */}
+      )}
 
       <ChatAction
         onClick={nextTheme}
@@ -486,60 +502,41 @@ export function ChatActions(props: {
           </>
         }
       />
-      {/* 删除快捷指令 */}
-      {/* <ChatAction
-        onClick={props.showPromptHints}
+      {/* sycn */}
+      <ChatAction
+        onClick={() => {
+          syncAndHandleResult();
+        }}
         text={Locale.Chat.InputActions.Prompt}
         icon={<PromptIcon />}
-      /> */}
+      />
 
       <ChatAction
         onClick={() => {
           navigate(Path.Masks);
         }}
         text={Locale.Chat.InputActions.Masks}
-        icon={<MaskIcon />}
+        icon={<PluginIcon />}
+        // icon={<MaskIcon />}
       />
-      {/* 暂时隐藏清楚所有对话 */}
-      {/* <ChatAction
-        text={Locale.Chat.InputActions.Clear}
-        icon={<BreakIcon />}
-        onClick={() => {
-          chatStore.updateCurrentSession((session) => {
-            if (session.clearContextIndex === session.messages.length) {
-              session.clearContextIndex = undefined;
-            } else {
-              session.clearContextIndex = session.messages.length;
-              session.memoryPrompt = ""; // will clear memory
-            }
-          });
-        }}
-      /> */}
 
       <ChatAction
         onClick={() => setShowModelSelector(true)}
-        text={currentModel}
-        icon={<RobotIcon />}
+        text={"Hints"}
+        icon={<QuestionMark />}
       />
 
+    {/* hints */}
       {showModelSelector && (
         <Selector
-          defaultSelectedValue={currentModel}
-          items={models.map((m) => ({
+          items={hints.map((m) => ({
             title: m,
             value: m,
           }))}
           onClose={() => setShowModelSelector(false)}
-          onSelection={(s) => {
-            if (s.length === 0) return;
-            chatStore.updateCurrentSession((session) => {
-              session.mask.modelConfig.model = s[0] as ModelType;
-              session.mask.syncGlobalConfig = false;
-            });
-            showToast(s[0]);
-          }}
         />
       )}
+      
     </div>
   );
 }
@@ -1058,7 +1055,7 @@ function _Chat() {
         <div className={`window-header-title ${styles["chat-body-title"]}`}>
           <div
             className={`window-header-main-title ${styles["chat-body-main-title"]}`}
-            onClickCapture={() => setIsEditingMessage(true)}
+            // onClickCapture={() => setIsEditingMessage(true)}
           >
             {!session.topic ? DEFAULT_TOPIC : session.topic}
           </div>
@@ -1067,16 +1064,6 @@ function _Chat() {
           </div>
         </div>
         <div className="window-actions">
-          {/* 删除编辑mask */}
-          {/* {!isMobileScreen && (
-            <div className="window-action-button">
-              <IconButton
-                icon={<RenameIcon />}
-                bordered
-                onClick={() => setIsEditingMessage(true)}
-              />
-            </div>
-          )} */}
 
           <div className="window-action-button">
             <IconButton
@@ -1220,7 +1207,7 @@ function _Chat() {
                   )}
                   <div className={styles["chat-message-item"]}>
                     <Markdown
-                      content={message.content}
+                      content={extractJSONContent(message.content)}  
                       loading={
                         (message.preview || message.streaming) &&
                         message.content.length === 0 &&
@@ -1240,6 +1227,10 @@ function _Chat() {
                         switch (message.animation.type) {
                           case "barchart":
                             return <BarChart {...message.animation} />;
+                          case "insertionSort":
+                            return <InsertionSort {...message.animation} />;
+                          case "selectionSort":
+                            return <SelectionSort {...message.animation} />;
                           case "changingAllNumber":
                             return (
                               <BarChart_changingAllNumber
@@ -1250,6 +1241,14 @@ function _Chat() {
                             return <FindMax {...message.animation} />;
                           case "searchnumber":
                             return <SearchNumber {...message.animation} />;
+                          case "binarysearch":
+                            return <BinarySearch {...message.animation} />; 
+                          case "component":
+                            return <ComponentsGraph {...message.animation} />; 
+                          case "check connectivity":
+                            return <ConnectivityGraph {...message.animation}/>;
+                          case "check_cycle":
+                            return <Graph_Cycle {...message.animation}/>;
                           default:
                             return null;
                         }

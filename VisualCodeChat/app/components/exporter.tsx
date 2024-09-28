@@ -33,7 +33,7 @@ import { api } from "../client/api";
 import { prettyObject } from "../utils/format";
 import { EXPORT_MESSAGE_CLASS_NAME } from "../constant";
 import { getClientConfig } from "../config/client";
-import { Props } from "../components/visual_props";
+import { Props } from "./visual-props";
 const Markdown = dynamic(async () => (await import("./markdown")).Markdown, {
   loading: () => <LoadingIcon />,
 });
@@ -131,8 +131,8 @@ export function MessageExporter() {
   type ExportFormat = (typeof formats)[number];
 
   const [exportConfig, setExportConfig] = useState({
-    format: "image" as ExportFormat,
-    includeContext: true,
+    format: "json" as ExportFormat,
+    includeContext: false,
   });
 
   function updateExportConfig(updater: (config: typeof exportConfig) => void) {
@@ -266,7 +266,7 @@ export function RenderExport(props: {
         role: role as any,
         content: role === "user" ? v.textContent ?? "" : v.innerHTML,
         date: "",
-        animation: emptyprops, //新加
+        animation: emptyprops,
       };
     });
 
@@ -527,7 +527,7 @@ export function ImagePreviewer(props: {
           <div>
             <div className={styles["main-title"]}>VisualCodeChat</div>
             <div className={styles["sub-title"]}>
-              github.com/Yidadaa/ChatGPT-Next-Web
+              placeholder
             </div>
             <div className={styles["icons"]}>
               <ExportAvatar avatar={config.avatar} />

@@ -37,8 +37,17 @@ export const getServerSideConfig = () => {
     );
   }
 
+  const apiKeyEnvVar = process.env.OPENAI_API_KEY ?? "";
+  const apiKeys = apiKeyEnvVar.split(",").map((v) => v.trim());
+  const randomIndex = Math.floor(Math.random() * apiKeys.length);
+  const apiKey = apiKeys[randomIndex];
+  console.log(
+    `[Server Config] using ${randomIndex + 1} of ${apiKeys.length} api key`,
+  );
+
   return {
-    apiKey: process.env.OPENAI_API_KEY,
+    // apiKey: process.env.OPENAI_API_KEY,
+    apiKey: apiKey,
     code: process.env.CODE,
     codes: ACCESS_CODES,
     needCode: ACCESS_CODES.size > 0,

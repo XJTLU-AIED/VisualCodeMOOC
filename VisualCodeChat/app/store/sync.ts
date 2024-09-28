@@ -24,8 +24,11 @@ export interface WebDavConfig {
 const isApp = !!getClientConfig()?.isApp;
 export type SyncStore = GetStoreState<typeof useSyncStore>;
 
+// uuid
+const { v4: uuidv4 } = require('uuid');
+
 const DEFAULT_SYNC_STATE = {
-  provider: ProviderType.WebDAV,
+  provider: ProviderType.UpStash,
   useProxy: true,
   proxyUrl: corsPath(ApiPath.Cors),
 
@@ -36,9 +39,9 @@ const DEFAULT_SYNC_STATE = {
   },
 
   upstash: {
-    endpoint: "",
-    username: STORAGE_KEY,
-    apiKey: "",
+    endpoint: "placeholder",
+    username: "0_"+uuidv4(),
+    apiKey: "placeholder",
   },
 
   lastSyncTime: 0,
@@ -60,8 +63,10 @@ export const useSyncStore = createPersistStore(
     export() {
       const state = getLocalAppState();
       const datePart = isApp
-      ? `${new Date().toLocaleDateString().replace(/\//g, '_')} ${new Date().toLocaleTimeString().replace(/:/g, '_')}`
-      : new Date().toLocaleString();
+        ? `${new Date().toLocaleDateString().replace(/\//g, "_")} ${new Date()
+            .toLocaleTimeString()
+            .replace(/:/g, "_")}`
+        : new Date().toLocaleString();
 
       const fileName = `Backup-${datePart}.json`;
       downloadAs(JSON.stringify(state), fileName);

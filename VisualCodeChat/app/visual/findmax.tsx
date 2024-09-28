@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import * as d3 from "d3";
-import { Props } from "../components/visual_props";
+import { Props } from "../components/visual-props";
 
-// 这个组件需要用到的参数：data, maxid, compareidx, messageId
+// data, maxid, compareidx, messageId
 
 const FindMax: React.FC<Props> = ({ data, maxidx, compareidx, messageId }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -63,44 +63,34 @@ const FindMax: React.FC<Props> = ({ data, maxidx, compareidx, messageId }) => {
       .attr("transform", `translate(0,${height - marginBottom})`)
       .call(xAxis)
       .selectAll("text")
-      .style("font-size", "20px"); // 设置x轴文本字体大小;
+      .style("font-size", "20px"); 
 
     // gy
     svgElement
       .append("g")
       .attr("transform", `translate(${marginLeft},0)`)
-      //.call(d3.axisLeft(y).tickFormat(d3.format(".0f")))
       .call(
         d3
           .axisLeft(y)
           .ticks(d3.max(data) as number)
           .tickFormat(d3.format(".0f")),
       )
-      //.call((g) => g.select(".domain").remove())
       .selectAll("text")
-      .style("font-size", "20px"); // 设置y轴文本字体大小;
+      .style("font-size", "20px"); 
 
-    // 排序动画函数
+
     async function chart() {
-      // 找到两个数组中不同的位置
-      //const diffIndex = findArrayDifference(data, newData);
-
-      //const theSVG = document.querySelector(`#${messageId}`);
 
       if (maxidx !== null && compareidx !== null) {
         const target_svg = d3.select(`#${"B" + messageId}`);
         await sleep(1000);
-
-        // if data[maxidx] >= data[compareidx]的情况
         let bar1 = target_svg.select(`.bar:nth-child(${maxidx + 1})`);
         let bar2 = target_svg.select(`.bar:nth-child(${compareidx + 1})`);
-
         if (data[maxidx] < data[compareidx]) {
           bar2 = target_svg.select(`.bar:nth-child(${maxidx + 1})`);
           bar1 = target_svg.select(`.bar:nth-child(${compareidx + 1})`);
         }
 
-        // 渐变颜色函数
         const colorTween1 = (startColor: string, endColor: string) => {
           return function (t: number) {
             const interpolateColor = d3.interpolateRgb(startColor, endColor);
@@ -113,7 +103,6 @@ const FindMax: React.FC<Props> = ({ data, maxidx, compareidx, messageId }) => {
             bar2.select("rect").attr("fill", interpolateColor(t));
           };
         };
-        // 比较
         bar1
           .transition()
           .duration(300)
@@ -152,10 +141,6 @@ const FindMax: React.FC<Props> = ({ data, maxidx, compareidx, messageId }) => {
             chart();
           });
 
-        // .on("start", () => {
-        //   mov1.select("rect").attr("fill", "orange");
-        // });
-
         bar2
           .transition()
           .duration(300)
@@ -181,38 +166,11 @@ const FindMax: React.FC<Props> = ({ data, maxidx, compareidx, messageId }) => {
           .duration(300)
           .delay(0)
           .tween("color", () => colorTween2("orange", "steelblue"));
-        //   .on("start", () => {
-        //     bar2.select("rect").attr("fill", "steelblue");
-        //   })
-        //   .on("end", () => {
-        //     chart();
-        //   });
       }
     }
-
-    // 更新数据并触发排序动画
-    // setTimeout(() => {
-    //   bars
-    //     .data(data)
-    //     .select("rect")
-    //     .transition()
-    //     .attr("x", (_, idx) => x(idx.toString()) as number)
-    //     .attr("y", (d) => y(d) as number)
-    //     .attr("height", (d) => y(0) - (y(d) as number))
-    //     .attr("width", x.bandwidth() as number)
-    //     .on("end", () => {
-    //       if (!data.every((element, index) => element === newData[index])) {
-    //         console.log("olddata: ", data);
-    //         console.log("newdata: ", newData);
-    //         chart();
-    //       }
-    //     });
-    //   //chart();
-    // });
     chart();
   }, [data, maxidx, compareidx, messageId]);
 
-  // 找到两个数组中不同的位置
   function findArrayDifference(
     arr1: number[],
     arr2: number[],

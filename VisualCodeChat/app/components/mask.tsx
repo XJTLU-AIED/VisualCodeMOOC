@@ -49,7 +49,8 @@ import {
   Draggable,
   OnDragEndResponder,
 } from "@hello-pangea/dnd";
-
+import { useSyncStore } from "../store/sync";
+let callCount = 0;
 // drag and drop helper function
 function reorder<T>(list: T[], startIndex: number, endIndex: number): T[] {
   const result = [...list];
@@ -417,7 +418,7 @@ export function MaskPage() {
   const downloadAll = () => {
     downloadAs(JSON.stringify(masks.filter((v) => !v.builtin)), FileName.Masks);
   };
-
+  
   const importFromFile = () => {
     readFromFile().then((content) => {
       try {
@@ -452,14 +453,14 @@ export function MaskPage() {
           </div>
 
           <div className="window-actions">
-            <div className="window-action-button">
+            {/* <div className="window-action-button">
               <IconButton
                 icon={<DownloadIcon />}
                 bordered
                 onClick={downloadAll}
                 text={Locale.UI.Export}
               />
-            </div>
+            </div> */}
             <div className="window-action-button">
               <IconButton
                 icon={<UploadIcon />}
@@ -545,6 +546,7 @@ export function MaskPage() {
                     onClick={() => {
                       chatStore.newSession(m);
                       navigate(Path.Chat);
+                      // syncAndHandleResult(); 
                     }}
                   />
                   {/* 查看mask */}

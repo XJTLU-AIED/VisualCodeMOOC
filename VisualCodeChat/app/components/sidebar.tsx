@@ -160,7 +160,8 @@ export function SideBar(props: { className?: string }) {
       </div>
       <div className={styles["sidebar-header-bar"]}>
         <IconButton
-          icon={<MaskIcon />}
+          // icon={<MaskIcon />}
+          icon={<PluginIcon />}
           text={shouldNarrow ? undefined : Locale.Mask.Name}
           className={styles["sidebar-bar-button"]}
           onClick={() => {
@@ -172,19 +173,7 @@ export function SideBar(props: { className?: string }) {
           }}
           shadow
         />
-        {/* <IconButton
-          icon={<PluginIcon />}
-          text={shouldNarrow ? undefined : Locale.Plugin.Name}
-          className={styles["sidebar-bar-button"]}
-          onClick={() => showToast(Locale.WIP)}
-          shadow
-        /> */}
       </div>
-      {/* XJTLU LOGO ********************************/}
-      {/* <div className={styles["XJTLU-logo"] + " no-dark"}>
-        <XJTLU_LIFE_logo />
-      </div> */}
-      {/* XJTLU LOGO ****************************** */}
       <div
         className={styles["sidebar-body"]}
         onClick={(e) => {
@@ -213,26 +202,6 @@ export function SideBar(props: { className?: string }) {
               <IconButton icon={<SettingsIcon />} shadow />
             </Link>
           </div>
-          {/* <div className={styles["sidebar-action"]}>
-            <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
-              <IconButton icon={<GithubIcon />} shadow />
-            </a>
-          </div> */}
-        </div>
-        <div>
-          <IconButton
-            icon={<AddIcon />}
-            text={shouldNarrow ? undefined : Locale.Home.NewChat}
-            onClick={() => {
-              if (config.dontShowMaskSplashScreen) {
-                chatStore.newSession();
-                navigate(Path.Chat);
-              } else {
-                navigate(Path.NewChat);
-              }
-            }}
-            shadow
-          />
         </div>
       </div>
 
