@@ -7,8 +7,9 @@
     1. [VisualCodeMOOC](#visualcodemooc)
     2. [VisualCodeChat](#visualcodechat)
 4. [Usage and Examples](#usage-and-examples)
-5. [License](#license)
-6. [Acknowledgements](#acknowledgements)
+5. [Participants in this Project](#participants-in-this-project)
+6. [License](#license)
+7. [Acknowledgements](#acknowledgements)
 
 ## Overview
 This repository contains the source code for the project VisualCodeMOOC, as described in the paper "[Paper Title]", submitted to the SoftwareX journal. [**pending**]
@@ -16,6 +17,8 @@ This repository contains the source code for the project VisualCodeMOOC, as desc
 VisualCodeMOOC is an interactive learning platform that integrates a conversational agent, VisualCodeChat, to help students understand algorithms and data structures. It offers personalized guidance within a MOOC environment by combining visualizations and hands-on exercises, enhancing the learning experience with interactive and engaging content.
 
 Check our deployed version at [VisualCodeMOOC](https://visualcodemooc.herokuapp.com/) [**pending**]
+
+<img src="https://github.com/duuan/VisualCodeMOOC_duan/blob/duanBranch/public/MOOC.png" alt="description" width="600"> 
 
 ## Key Features
 
@@ -85,6 +88,13 @@ While chatting with VisualCodeChat, user may meet the following four phases. Exa
 <img src="https://github.com/duuan/VisualCodeMOOC_duan/blob/duanBranch/public/screenshot_hint1.jpg" alt="description" width="500">
 5. Completion of the learning
 
+## Participants in this Project:
+- Mingyuan Li
+- Duan Wang
+- Erick Purwanto
+- Thomas Selig
+- Qing Zhang
+- Hai-Ning Liang
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
