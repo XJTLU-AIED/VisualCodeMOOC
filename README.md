@@ -77,10 +77,12 @@ You can learn algorithms in VisualCodeMOOC by following the below procedure:
 While chatting with VisualCodeChat, user may meet the following four phases. Example scenarios are shown in the screenshots: 
 1. VisualCodeChat welcome
 2. Adaptive teaching
-![image](https://github.com/user-attachments/assets/07d85887-7307-4117-8258-a14ebcc5aa3e)
-![image](https://github.com/user-attachments/assets/6b3f5fbb-2901-46db-b386-4e6875ab85d4)
+<img src="https://github.com/duuan/VisualCodeMOOC_duan/blob/duanBranch/public/screenshot1.png" alt="description" width="500">  
+
+<img src="https://github.com/duuan/VisualCodeMOOC_duan/blob/duanBranch/public/screenshot_adaptive.png" alt="description" width="600">
+
 4. Interactive learning
-![image](https://github.com/user-attachments/assets/3f09b038-ba26-4bc9-898c-78030a306d69)
+<img src="https://github.com/duuan/VisualCodeMOOC_duan/blob/duanBranch/public/screenshot_hint1.jpg" alt="description" width="500">
 5. Completion of the learning
 
 
