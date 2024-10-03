@@ -27,14 +27,14 @@ Check our deployed version at [VisualCodeMOOC](https://visualcodemooc.herokuapp.
 
 ## Installation
 ### VisualCodeMOOC
-1. **Install Material for MkDocs**
+1. **Install Material for MkDocs**      
 You may install Material for MkDocs with `pip` (recommended), ideally using a virtual environment.
     ```
     pip install mkdocs-material
     ```
     You can also use [docker](https://squidfunk.github.io/mkdocs-material/getting-started/#with-docker) or [git](https://squidfunk.github.io/mkdocs-material/getting-started/#with-git) to download Material for MkDocs.
 
-2. **Run the site on local machine**
+2. **Run the site on local machine**       
 Open the code file, switch to your virtual environment, you can run the site on your local machine with:
     ```
     mkdocs serve
@@ -79,9 +79,9 @@ While chatting with VisualCodeChat, user may meet the following four phases. Exa
 2. Adaptive teaching
 ![image](https://github.com/user-attachments/assets/07d85887-7307-4117-8258-a14ebcc5aa3e)
 ![image](https://github.com/user-attachments/assets/6b3f5fbb-2901-46db-b386-4e6875ab85d4)
-3. Interactive learning
+4. Interactive learning
 ![image](https://github.com/user-attachments/assets/3f09b038-ba26-4bc9-898c-78030a306d69)
-4. Completion of the learning
+5. Completion of the learning
 
 
 ## License
