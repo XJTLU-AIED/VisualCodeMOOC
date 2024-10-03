@@ -27,7 +27,18 @@ Check our deployed version at [VisualCodeMOOC](https://visualcodemooc.herokuapp.
 
 ## Installation
 ### VisualCodeMOOC
+1. **Install Material for MkDocs**
+You may install Material for MkDocs with `pip` (recommended), ideally using a virtual environment.
+    ```
+    pip install mkdocs-material
+    ```
+    You can also use [docker](https://squidfunk.github.io/mkdocs-material/getting-started/#with-docker) or [git](https://squidfunk.github.io/mkdocs-material/getting-started/#with-git) to download Material for MkDocs.
 
+2. **Run the site on local machine**
+Open the code file, switch to your virtual environment, you can run the site on your local machine with:
+    ```
+    mkdocs serve
+    ```
 ### VisualCodeChat
 - Requirements
 NodeJS >= 18
@@ -52,6 +63,26 @@ Run the following commands to install project dependencies and start the local d
     This will initialize the project and launch the server in development mode.
 
 ## Usage and Examples
+### Usage guide
+You can learn algorithms in VisualCodeMOOC by following the below procedure:
+1. Start with tutorial and short video lecture to get basic understanding of a topic
+2. Chat with VisualCodeChat
+    VisualCodeChat will give:
+    - English explanation
+    - Step-by-step explanation with visualization
+    - Code learning
+    - Practice testing
+3. Try extra exercises
+## Scenarios 
+While chatting with VisualCodeChat, user may meet the following four phases. Example scenarios are shown in the screenshots: 
+1. VisualCodeChat welcome
+2. Adaptive teaching
+![image](https://github.com/user-attachments/assets/07d85887-7307-4117-8258-a14ebcc5aa3e)
+![image](https://github.com/user-attachments/assets/6b3f5fbb-2901-46db-b386-4e6875ab85d4)
+3. Interactive learning
+![image](https://github.com/user-attachments/assets/3f09b038-ba26-4bc9-898c-78030a306d69)
+4. Completion of the learning
+
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
