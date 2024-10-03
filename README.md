@@ -7,7 +7,7 @@
     1. [VisualCodeMOOC](#visualcodemooc-1)
     2. [VisualCodeChat](#visualcodechat)
 4. [Usage and Examples](#usage-and-examples)
-5. [Participants in this Project](#participants-in-this-project)
+5. [Contributors](#contributors)
 6. [License](#license)
 7. [Acknowledgements](#acknowledgements)
 
@@ -88,7 +88,7 @@ While chatting with VisualCodeChat, user may meet the following four phases. Exa
 <img src="https://github.com/duuan/VisualCodeMOOC_duan/blob/duanBranch/public/screenshot_hint1.jpg" alt="description" width="500">
 5. Completion of the learning
 
-## Participants in this Project:
+## Contributors:
 - Mingyuan Li
 - Duan Wang
 - Erick Purwanto
@@ -100,6 +100,6 @@ While chatting with VisualCodeChat, user may meet the following four phases. Exa
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgements
-
+This work is supported by the research funds XJTLU RDF-22-01-062, TDF2223-R26-219, TDF2324-R27-230, RC4AIED202406, and AoFE Implementing Computational Thinking Education in K‑12 and Higher Education Special Interest Group. We would like to thank the STEAM Centre, Ulink College of Suzhou Industrial Park for their support.
 
 
