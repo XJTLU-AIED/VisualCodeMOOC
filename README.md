@@ -4,7 +4,7 @@
 1. [Overview](#overview)
 2. [Key Features](#key-features)
 3. [Installation](#installation)
-    1. [VisualCodeMOOC](#visualcodemooc)
+    1. [VisualCodeMOOC](#visualcodemooc-1)
     2. [VisualCodeChat](#visualcodechat)
 4. [Usage and Examples](#usage-and-examples)
 5. [Participants in this Project](#participants-in-this-project)
