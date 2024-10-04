@@ -88,7 +88,7 @@ While chatting with VisualCodeChat, user may meet the following four phases. Exa
 <img src="https://github.com/XJTLU-AIED/VisualCodeMOOC/blob/main/public/screenshot_hint1.jpg" alt="description" width="500">
 5. Completion of the learning
 
-## Contributors:
+## Contributors
 - Mingyuan Li
 - Duan Wang
 - Erick Purwanto
