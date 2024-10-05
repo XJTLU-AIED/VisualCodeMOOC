@@ -1,4 +1,4 @@
-export const OWNER = "placeholder";
+export const OWNER = "XJTLU-AIED";
 export const REPO = "VisualCodeChat";
 export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
 export const ISSUE_URL = `https://github.com/${OWNER}/${REPO}/issues`;
