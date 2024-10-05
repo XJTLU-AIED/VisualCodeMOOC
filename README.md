@@ -16,7 +16,7 @@ This repository contains the source code for the project VisualCodeMOOC, as desc
 
 VisualCodeMOOC is an interactive learning platform that integrates a conversational agent, VisualCodeChat, to help students understand algorithms and data structures. It offers personalized guidance within a MOOC environment by combining visualizations and hands-on exercises, enhancing the learning experience with interactive and engaging content.
 
-Check our deployed version at [VisualCodeMOOC](visualcodechatsoftwarex.vercel.app) 
+Check our deployed version at [VisualCodeMOOC](https://visualcodechatsoftwarex.vercel.app/) 
 
 <img src="https://github.com/XJTLU-AIED/VisualCodeMOOC/blob/main/public/MOOC.png" alt="description" width="600"> 
 
