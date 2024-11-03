@@ -12,7 +12,7 @@
 7. [Acknowledgements](#acknowledgements)
 
 ## Overview
-This repository contains the source code for the project VisualCodeMOOC, as described in the paper "VisualCodeMOOC: Programming Course Platform Integrating a Conversational Agent for Enhanced Learning Through Dynamic Visualizations", submitted to the SoftwareX journal.
+This repository contains the source code for the project VisualCodeMOOC, as described in the paper "VisualCodeMOOC: A Course Platform for Algorithms and Data Structures Integrating a Conversational Agent for Enhanced Learning Through Dynamic Visualizations", submitted to the SoftwareX journal.
 
 VisualCodeMOOC is an interactive learning platform that integrates a conversational agent, VisualCodeChat, to help students understand algorithms and data structures. It offers personalized guidance within a MOOC environment by combining visualizations and hands-on exercises, enhancing the learning experience with interactive and engaging content.
 
