@@ -7,9 +7,10 @@
     1. [VisualCodeMOOC](#visualcodemooc-1)
     2. [VisualCodeChat](#visualcodechat)
 4. [Usage and Examples](#usage-and-examples)
-5. [Contributors](#contributors)
-6. [License](#license)
-7. [Acknowledgements](#acknowledgements)
+5. [Modification and Customization](#modification-and-customization)
+6. [Contributors](#contributors)
+7. [License](#license)
+8. [Acknowledgements](#acknowledgements)
 
 ## Overview
 This repository contains the source code for the project VisualCodeMOOC, as described in the paper "VisualCodeMOOC: A Course Platform for Algorithms and Data Structures Integrating a Conversational Agent for Enhanced Learning Through Dynamic Visualizations", submitted to the SoftwareX journal.
@@ -87,6 +88,14 @@ While chatting with VisualCodeChat, user may meet the following four phases. Exa
 4. Interactive learning
 <img src="https://github.com/XJTLU-AIED/VisualCodeMOOC/blob/main/public/screenshot_hint1.jpg" alt="description" width="500">
 5. Completion of the learning
+
+
+## Modification and Customization
+### Customize Visualizations
+To modify the visualizations, you need to use the files in the visualcodechat/app/visual, select the visualization you want to modify, and modify the const property in the file.
+To add new visualizations, you need to use the cn.tsx in the visualcodechat/app/masks to define the visualization name in the animation property. Then, design your own new visualization by creating a new file in the visualcodechat/app/visual and add the content according to the same way as the existing visualizations. After that, you need to employ the new visualization in the visualcodechat/app/components/chat.tsx. Add the new visualization const in the div element: className={styles["chat-message-item"]}. With the suitable condition setting accoriding to the animation property, you can use the new visualization in the chatbot. 
+### Customize Courses
+To modify the courses, you need to use the cn.tsx in the visualcodechat/app/masks. Specifically, if you want to modify the existing content, you can check the mask name first then modify the content in the corresponding mask component. If you want to add a new course, you can create a new mask file in the CN_MASKS and add the content according to the same way as the existing masks. For example, you can set the difficulty level of the exercise or customize the algorithm of the course.
 
 ## Contributors
 - Mingyuan Li
