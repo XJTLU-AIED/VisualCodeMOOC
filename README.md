@@ -65,6 +65,11 @@ Run the following commands to install project dependencies and start the local d
     yarn dev
     ```
     This will initialize the project and launch the server in development mode.
+### OpenAI API
+There is a publicly available URL provided by an open-source initiative that offers free OpenAI API access. This requires only a GitHub account to obtain the API key, making it easy for anyone to access.
+* The GitHub open-source project that provides a free GPT-3.5 API key for each GitHub account: https://github.com/chatanywhere/GPT_API_free/tree/main. 
+* The direct link to acquire the key is: https://api.chatanywhere.org/v1/oauth/free/render.
+
 
 ## Usage and Examples
 ### Usage guide
