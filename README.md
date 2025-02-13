@@ -1,5 +1,7 @@
 # VisualCodeMOOC
 
+Official repo of **VisualCodeMOOC: A course platform for algorithms and data structures integrating a conversational agent for enhanced learning through dynamic visualizations**, *SoftwareX*. [[ScienceDirect](https://www.sciencedirect.com/science/article/pii/S2352711025000391)]
+
 ## Table of Contents
 1. [Overview](#overview)
 2. [Key Features](#key-features)
@@ -9,8 +11,9 @@
 4. [Usage and Examples](#usage-and-examples)
 5. [Modification and Customization](#modification-and-customization)
 6. [Contributors](#contributors)
-7. [License](#license)
-8. [Acknowledgements](#acknowledgements)
+7. [Citation](#citation)
+8. [License](#license)
+9. [Acknowledgements](#acknowledgements)
 
 ## Overview
 This repository contains the source code for the project VisualCodeMOOC, as described in the paper "VisualCodeMOOC: A Course Platform for Algorithms and Data Structures Integrating a Conversational Agent for Enhanced Learning Through Dynamic Visualizations", submitted to the SoftwareX journal.
@@ -102,7 +105,7 @@ To add new visualizations, you need to use the cn.tsx in the visualcodechat/app/
 ### Customize Courses
 To modify the courses, you need to use the cn.tsx in the visualcodechat/app/masks. Specifically, if you want to modify the existing content, you can check the mask name first then modify the content in the corresponding mask component. If you want to add a new course, you can create a new mask file in the CN_MASKS and add the content according to the same way as the existing masks. For example, you can set the difficulty level of the exercise or customize the algorithm of the course.
 
-## Contributors
+# Contributors
 - Mingyuan Li
 - Duan Wang
 - Erick Purwanto
@@ -110,10 +113,26 @@ To modify the courses, you need to use the cn.tsx in the visualcodechat/app/mask
 - Qing Zhang
 - Hai-Ning Liang
 
-## License
+# Citation
+If you find this project useful for your research, please consider citing: 
+```
+@article{LI2025102072,
+title = {VisualCodeMOOC: A course platform for algorithms and data structures integrating a conversational agent for enhanced learning through dynamic visualizations},
+journal = {SoftwareX},
+volume = {30},
+pages = {102072},
+year = {2025},
+issn = {2352-7110},
+doi = {[https://doi.org/10.1016/j.softx.2025.102072](https://doi.org/10.1016/j.softx.2025.102072)},
+url = {[https://www.sciencedirect.com/science/article/pii/S2352711025000391](https://www.sciencedirect.com/science/article/pii/S2352711025000391)},
+author = {Mingyuan Li and Duan Wang and Erick Purwanto and Thomas Selig and Qing Zhang and Hai-Ning Liang}
+}
+```
+
+# License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Acknowledgements
+# Acknowledgements
 This work is supported by the research funds XJTLU RDF-22-01-062, TDF2223-R26-219, TDF2324-R27-230, RC4AIED202406, and AoFE Implementing Computational Thinking Education in K‑12 and Higher Education Special Interest Group. We would like to thank the STEAM Centre, Ulink College of Suzhou Industrial Park for their support.
 
 
